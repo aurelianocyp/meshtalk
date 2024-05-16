@@ -37,3 +37,5 @@ on the `.bin` files containing the vertex positions of the multiface meshes. Not
 
 The code and dataset are released under [CC-NC 4.0 International license](https://github.com/facebookresearch/BinauralSpeechSynthesis/blob/main/LICENSE).
 
+##记录
+需要保存每个网格的话使用render_mine.py
