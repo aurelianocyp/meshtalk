@@ -1,31 +1,11 @@
-# meshtalk
 
-This repository contains code to run [MeshTalk](https://openaccess.thecvf.com/content/ICCV2021/papers/Richard_MeshTalk_3D_Face_Animation_From_Speech_Using_Cross-Modality_Disentanglement_ICCV_2021_paper.pdf) for face animation from audio. If you use MeshTalk, please cite
-```
-@inproceedings{richard2021meshtalk,
-    author    = {Richard, Alexander and Zollh\"ofer, Michael and Wen, Yandong and de la Torre, Fernando and Sheikh, Yaser},
-    title     = {MeshTalk: 3D Face Animation From Speech Using Cross-Modality Disentanglement},
-    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
-    month     = {October},
-    year      = {2021},
-    pages     = {1173-1182}
-}
-```
-
-## Supplemental Material
-[![Watch the video](https://github.com/facebookresearch/meshtalk/blob/main/supplemental_video.png)](https://www.facebook.com/MetaResearch/videos/251508987094387/)
-
-## Running MeshTalk
 
 ### Dependencies
+python3.8.10 2080ti
 
-```
-ffmpeg
-numpy
-torch         (tested with v1.10.0)
-pytorch3d     (tested with v0.4.0)
-torchaudio    (tested with v0.10.0)
-```
+- pip install torch==1.10.0+cu111 torchvision==0.11.0+cu111 torchaudio==0.10.0 -f https://download.pytorch.org/whl/torch_stable.html
+- conda install ffmpeg
+- pytorch3d     (tested with v0.4.0)
 
 ### Animating a Face Mesh from Audio
 
