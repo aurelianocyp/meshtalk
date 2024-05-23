@@ -29,9 +29,11 @@ One potential dataset to use for MeshTalk is the [Multiface](https://github.com/
 
 Note that the geometries in multiface have a slightly different topology than in meshtalk. To convert geometries from multiface to meshtalk, run
 ```
-python utils/multiface2meshtalk.py <multiface_mesh.bin> <output.obj>
+python utils/multiface2meshtalk.py 
 ```
 on the `.bin` files containing the vertex positions of the multiface meshes. Note that the input must be the `.bin` files from the `tracked_mesh` directories in multiface, **not** the `.obj` files. The output is a `.obj` file in the same format as `assets/face_template.obj`.
+
+将需要转化的bin文件放在主目录下的multiface/bin文件夹中。结果会自动生成在multiface/objs文件夹中。
 
 ## License
 
