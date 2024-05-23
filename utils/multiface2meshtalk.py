@@ -7,6 +7,9 @@ LICENSE file in the root directory of this source tree.
 """
 
 import argparse
+import os.path
+from glob import glob
+
 import numpy as np
 
 
@@ -15,34 +18,34 @@ ignore_vertices = {551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 562, 5
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("multiface_geometry", type=str, help="Input: .bin file containing the geometry of a multiface mesh")
-parser.add_argument("meshtalk_geometry", type=str, help="Output: .obj file containing the topology of a meshtalk mesh (vertices + faces)")
 parser.add_argument("--template_topology", type=str, default="assets/face_template.obj")
 args = parser.parse_args()
 
-# load input .bin file from multiface
-if not args.multiface_geometry[-4:] == ".bin":
-    raise Exception("Multiface geometry must be a .bin file")
-geom = np.fromfile(args.multiface_geometry, dtype=np.float32).reshape(-1, 3)
-valid_verts = [i for i in range(7306) if not i in ignore_vertices]
-geom = geom[valid_verts, :]
-geom = [f"v {v[0]:.7e} {v[1]:.7e} {v[2]:.7e}" for v in geom]
+path_list=glob('bin/*.bin')
+for bin_path in path_list:
+    # load input .bin file from multiface
+    if not bin_path[-4:] == ".bin":
+        raise Exception("Multiface geometry must be a .bin file")
+    geom = np.fromfile(bin_path, dtype=np.float32).reshape(-1, 3)
+    valid_verts = [i for i in range(7306) if not i in ignore_vertices]
+    geom = geom[valid_verts, :]
+    geom = [f"v {v[0]:.7e} {v[1]:.7e} {v[2]:.7e}" for v in geom]
 
-# load meshtalk template topology
-if not args.template_topology[-4:] == ".obj":
-    raise Exception("Meshtalk template topology must be a .obj file")
-with open(args.template_topology, "r") as f:
-    topology = f.readlines()
-    topology = [line.strip() for line in topology]
-f.close()
+    # load meshtalk template topology
+    if not args.template_topology[-4:] == ".obj":
+        raise Exception("Meshtalk template topology must be a .obj file")
+    with open(args.template_topology, "r") as f:
+        topology = f.readlines()
+        topology = [line.strip() for line in topology]
+    f.close()
 
-topology = geom + topology[len(geom):]
+    topology = geom + topology[len(geom):]
 
-# save result to .obj file
-if not args.meshtalk_geometry[-4:] == ".obj":
-    raise Exception("Output file must be a .obj file")
-with open(args.meshtalk_geometry, "w") as f:
-    topology = [f"{line}\n" for line in topology]
-    f.writelines(topology)
-f.close()
+    # save result to .obj file
+    if not os.path.exists('objs'):
+        os.makedirs('objs')
+    with open(f'objs/{os.path.splitext(os.path.basename(bin_path))[0]}', "w") as f:
+        topology = [f"{line}\n" for line in topology]
+        f.writelines(topology)
+    f.close()
 
